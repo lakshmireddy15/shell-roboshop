@@ -70,3 +70,4 @@ dnf install mongodb-mongosh -y &>>LOG_FILE
 VALIDATE $? "installing mongodb client"
 
 mongosh --host mongodb.lakshmireddy.site </app/db/master-data.js &>>LOG_FILE
+VALIDATE $? "loading data into mongodb"
