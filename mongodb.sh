@@ -31,21 +31,21 @@ VALIDATE(){
         exit 1
     fi
 }
-# it refers to the repo file
-cp mongo.repo /etc/yum.repos.d/mongo.repo
-VALIDATE $? "Copy mongodb repo"
 
-dnf install mongodb-org -y & >>$LOG_FILE
-VALIDATE $? "installing mongodb server"
+cp mongo.repo /etc/yum.repos.d/mongodb.repo
+VALIDATE $? "Copying MongoDB repo"
 
-systemctl enable mongod >>$LOG_FILE
-VALIDATE $? "enabling mongodb"
+dnf install mongodb-org -y &>>$LOG_FILE
+VALIDATE $? "Installing mongodb server"
 
-systemctl start mongod >>$LOG_FILE
-VALIDATE $? "starting mongodb"
+systemctl enable mongod &>>$LOG_FILE
+VALIDATE $? "Enabling MongoDB"
 
-sed -i 's/127.0.0.1/0.0.0.0/g '/etc/mongod.conf
-VALIDATE $? "Editing mongodb for remote connection"
+systemctl start mongod &>>$LOG_FILE
+VALIDATE $? "Starting MongoDB"
 
-systemctl restart mongod >>$LOG_FILE
-VALIDATE $? "restart mongodb"
+sed -i 's/127.0.0.1/0.0.0.0/g' /etc/mongod.conf
+VALIDATE $? "Editing MongoDB conf file for remote connections"
+
+systemctl restart mongod &>>$LOG_FILE
+VALIDATE $? "Restarting MongoDB"
