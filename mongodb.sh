@@ -7,6 +7,7 @@ Y="\e[33m"
 N="\e[0m"
 LOGS_FOLDER="/var/log/roboshop-logs"
 SCRIPT_NAME=$(echo $0 | cut -d "." -f1)
+SCRIPT_DIRECTORY=$PWD
 LOG_FILE="$LOGS_FOLDER/$SCRIPT_NAME.log"
 
 mkdir -p $LOGS_FOLDER
@@ -32,7 +33,7 @@ VALIDATE(){
     fi
 }
 
-cp mongo.repo /etc/yum.repos.d/mongodb.repo
+cp $SCRIPT_DIRECTORY/mongo.repo /etc/yum.repos.d/mongodb.repo
 VALIDATE $? "Copying MongoDB repo"
 
 dnf install mongodb-org -y &>>$LOG_FILE
@@ -40,6 +41,7 @@ VALIDATE $? "Installing mongodb server"
 
 systemctl enable mongod &>>$LOG_FILE
 VALIDATE $? "Enabling MongoDB"
+
 
 systemctl start mongod &>>$LOG_FILE
 VALIDATE $? "Starting MongoDB"
