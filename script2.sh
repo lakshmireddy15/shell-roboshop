@@ -1,4 +1,4 @@
 #!/bin/bash
 
 echo "$GREETING"
-echo "PID $$"
+echo "PID 1 $$"
