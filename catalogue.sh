@@ -45,6 +45,7 @@ then
     VALIDATE $? "creating system user"
 else
     echo "system user si aleday updated"
+fi
 
 mkdir /app 
 VALIDATE $? "creating app directory"
