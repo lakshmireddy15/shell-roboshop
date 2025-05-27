@@ -31,16 +31,20 @@ VALIDATE() {
     fi
 }
 dnf module disable nodejs -y &>>LOG_FILE
-VALIDATE $? "disabling MongoDB service"
+VALIDATE $? "disabling nodejs"
 
 dnf module enable nodejs:20 -y &>>LOG_FILE
-VALIDATE $? "Enabling MongoDB service"
+VALIDATE $? "Enabling nodejs"
 
 dnf install nodejs -y &>>LOG_FILE
-VALIDATE $? "Installing MongoDB service"
-
-useradd --system --home /app --shell /sbin/nologin --comment "roboshop system user" roboshop &>>LOG_FILE
-VALIDATE $? "creating system user"
+VALIDATE $? "Installing nodejse"
+if roboshop
+if [ $? -ne 0 ]
+then 
+    useradd --system --home /app --shell /sbin/nologin --comment "roboshop system user" roboshop &>>LOG_FILE
+    VALIDATE $? "creating system user"
+else
+    echo "system user si aleday updated"
 
 mkdir /app 
 VALIDATE $? "creating app directory"
